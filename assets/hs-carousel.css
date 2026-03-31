@@ -1,15 +1,22 @@
 /* ============================================================
-   HS Accordion Carousel — Stylesheet
-   Colors driven by CSS variables injected inline on .hs-section
+   HS Accordion Carousel — Stylesheet v2.1
+   All styles scoped under .hs-section to avoid conflicts.
+   CSS variables drive colors, fonts, sizes — set inline per instance.
    ============================================================ */
 
-* { box-sizing: border-box; }
+/* Scoped box-sizing — does NOT affect anything outside the widget */
+.hs-section,
+.hs-section *,
+.hs-section *::before,
+.hs-section *::after {
+    box-sizing: border-box;
+}
 
 /* ── Section ─────────────────────────────────────────── */
 .hs-section {
     background: var(--hs-bg, #0098ED);
     padding: 60px 0 52px;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--hs-font, 'Poppins', sans-serif);
     overflow: hidden;
 }
 .hs-section .hs-inner {
@@ -52,14 +59,12 @@
 /* ── Closed card (narrow strip) ──────────────────────── */
 .hs-section .hs-item.hs-closed {
     flex: 0 0 72px !important;
-    background: var(--hs-card-closed, #1DCBF1) !important;
+    background: var(--hs-card-closed, var(--hs-card, #1DCBF1)) !important;
     border-color: rgba(255,255,255,0.2) !important;
     cursor: pointer;
 }
 
-/* ── Number badge — desktop open card
-      Rounded-square (14px radius) inside the card at top-right.
-      Uses section bg (#0098ED) to contrast against the cyan card. ── */
+/* ── Number badge — desktop open card ── */
 .hs-section .hs-num-badge {
     position: absolute;
     top: 16px;
@@ -67,7 +72,6 @@
     width: 54px;
     height: 54px;
     background: var(--hs-bg, #0098ED);
-    /* top-left:60 top-right:20 bottom-right:60 bottom-left:60 — matches Figma */
     border-radius: 60px 20px 60px 60px;
     display: flex;
     align-items: center;
@@ -77,6 +81,7 @@
     color: #fff;
     z-index: 4;
     flex-shrink: 0;
+    font-family: var(--hs-font, 'Poppins', sans-serif);
     transition: top 0.3s cubic-bezier(0.4,0,0.2,1),
                 right 0.3s cubic-bezier(0.4,0,0.2,1),
                 width 0.3s cubic-bezier(0.4,0,0.2,1),
@@ -85,7 +90,7 @@
                 background 0.25s;
 }
 
-/* ── Badge changes to white arch shape when card is closed ─── */
+/* Badge → arch shape when closed */
 .hs-section .hs-item.hs-closed .hs-num-badge {
     top: 14px;
     right: 50%;
@@ -103,20 +108,36 @@
 .hs-section .hs-open-content {
     display: flex;
     flex-direction: column;
-    padding: 30px 88px 28px 26px; /* right pad leaves room for badge */
+    padding: 30px 88px 28px 26px;
     height: 100%;
     overflow: hidden;
 }
 .hs-section .hs-item.hs-closed .hs-open-content { display: none; }
 .hs-section .hs-item:not(.hs-closed) .hs-closed-content { display: none !important; }
 
+/* ── Card title text (desktop open) ── */
 .hs-section .hs-open-title {
     font-size: 18px;
     font-weight: 700;
     color: var(--hs-title, #09202e);
     line-height: 1.3;
     margin: 0 0 14px 0;
+    font-family: var(--hs-font, 'Poppins', sans-serif);
 }
+
+/* ── Card header image (desktop open) ── */
+.hs-section .hs-header-img {
+    max-width: 100%;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    object-position: left center;
+    display: block;
+    margin-bottom: 14px;
+}
+
+/* ── Divider ── */
 .hs-section .hs-divider {
     height: 1.5px;
     background: rgba(255,255,255,0.55);
@@ -124,6 +145,8 @@
     margin-bottom: 16px;
     flex-shrink: 0;
 }
+
+/* ── Body text ── */
 .hs-section .hs-body {
     font-size: 14px;
     color: var(--hs-body, rgba(255,255,255,0.94));
@@ -131,12 +154,19 @@
     flex: 1;
     overflow: hidden;
     margin: 0;
+    font-family: var(--hs-font, 'Poppins', sans-serif);
 }
+
+/* ── Button wrapper — flex so align control works ── */
 .hs-section .hs-btn-wrap {
     margin-top: auto;
     padding-top: 22px;
     flex-shrink: 0;
+    display: flex;
+    justify-content: var(--hs-btn-align, flex-start);
 }
+
+/* ── Button ── */
 .hs-section .hs-btn {
     display: inline-flex;
     align-items: center;
@@ -145,12 +175,12 @@
     background: var(--hs-btn-bg, #fff);
     border: none;
     border-radius: 999px;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--hs-font, 'Poppins', sans-serif);
     font-size: 14px;
     font-weight: 600;
     color: var(--hs-btn-text, #1DCBF1);
     text-decoration: none;
-    transition: background 0.2s, color 0.2s;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
     white-space: nowrap;
     cursor: pointer;
 }
@@ -162,11 +192,11 @@
     stroke-width: 2.2;
     stroke-linecap: round;
     stroke-linejoin: round;
+    flex-shrink: 0;
 }
 .hs-section .hs-item:not(.hs-closed):hover .hs-btn {
     background: var(--hs-card, #1DCBF1);
     color: #fff;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
 /* ── Closed strip: vertical rotated title ────────────── */
@@ -188,6 +218,7 @@
     color: var(--hs-title, #09202e);
     white-space: nowrap;
     letter-spacing: 0.3px;
+    font-family: var(--hs-font, 'Poppins', sans-serif);
 }
 
 /* ── Nav arrows ──────────────────────────────────────── */
@@ -223,6 +254,16 @@
 /* ── Mobile card header (hidden on desktop) ──────────── */
 .hs-section .hs-card-header { display: none; }
 
+/* Mobile header image */
+.hs-section .hs-card-header-img {
+    max-height: 36px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    flex-shrink: 0;
+}
+
 /* ============================================================
    MOBILE ≤ 768px — vertical stacked accordion
    ============================================================ */
@@ -243,7 +284,6 @@
         transition: none !important;
     }
 
-    /* All cards: full width, same cyan, rounded */
     .hs-section .hs-item,
     .hs-section .hs-item.hs-closed {
         flex: none !important;
@@ -257,15 +297,14 @@
         position: relative;
     }
     .hs-section .hs-item.hs-closed {
-        background: var(--hs-card-closed, #1DCBF1) !important;
+        background: var(--hs-card-closed, var(--hs-card, #1DCBF1)) !important;
         border-color: rgba(255,255,255,0.2) !important;
     }
 
-    /* Hide desktop-only elements */
     .hs-section .hs-closed-content { display: none !important; }
     .hs-section .hs-num-badge { display: none !important; }
 
-    /* Mobile header row — always visible */
+    /* Mobile header row */
     .hs-section .hs-card-header {
         display: flex !important;
         align-items: center;
@@ -279,14 +318,14 @@
         color: var(--hs-title, #09202e);
         flex: 1;
         line-height: 1.3;
-        font-family: 'Poppins', sans-serif;
+        font-family: var(--hs-font, 'Poppins', sans-serif);
     }
-    /* Mobile badge — open card: same blue rounded shape as desktop */
+
+    /* Mobile badge */
     .hs-section .hs-card-badge {
         width: 44px;
         height: 44px;
         background: var(--hs-bg, #0098ED);
-        /* open: 60 20 60 60 */
         border-radius: 60px 20px 60px 60px;
         display: flex;
         align-items: center;
@@ -295,31 +334,35 @@
         font-weight: 700;
         color: #fff;
         flex-shrink: 0;
-        font-family: 'Poppins', sans-serif;
+        font-family: var(--hs-font, 'Poppins', sans-serif);
         transition: border-radius 0.3s cubic-bezier(0.4,0,0.2,1), background 0.25s;
     }
-    /* Mobile badge — closed card: white, different corner shape */
     .hs-section .hs-item.hs-closed .hs-card-badge {
         background: var(--hs-badge-bg, #fff);
         color: var(--hs-badge-text, #1DCBF1);
-        /* closed: 60 20 20 60 */
         border-radius: 60px 20px 20px 60px;
     }
 
-    /* Mobile open card body */
+    /* Mobile open content */
     .hs-section .hs-item:not(.hs-closed) .hs-open-content {
         display: flex !important;
         padding: 0 18px 20px !important;
         height: auto !important;
         overflow: visible !important;
     }
-    /* Hide desktop title on mobile (header already shows it) */
+    /* Desktop title hidden on mobile — header row already shows it */
     .hs-section .hs-item:not(.hs-closed) .hs-open-title { display: none; }
+    /* Desktop image also hidden on mobile — shown in header row */
+    .hs-section .hs-item:not(.hs-closed) .hs-header-img { display: none; }
     .hs-section .hs-item:not(.hs-closed) .hs-divider { margin-bottom: 14px; }
     .hs-section .hs-item:not(.hs-closed) .hs-body { overflow: visible !important; }
 
-    /* Mobile button: full width */
-    .hs-section .hs-btn-wrap { padding-top: 18px; width: 100%; }
+    /* Mobile button: full width, always centred */
+    .hs-section .hs-btn-wrap {
+        padding-top: 18px;
+        width: 100%;
+        justify-content: center !important;
+    }
     .hs-section .hs-btn {
         display: flex !important;
         width: 100%;
@@ -327,9 +370,6 @@
         padding: 13px 26px;
     }
 
-    /* Closed card: hide open content */
     .hs-section .hs-item.hs-closed .hs-open-content { display: none !important; }
-
-    /* Hide nav on mobile */
     .hs-section .hs-nav { display: none; }
 }
