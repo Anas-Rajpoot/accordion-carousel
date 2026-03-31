@@ -1,0 +1,78 @@
+Task: Convert the attached HTML carousel into a reusable WordPress plugin called hs-accordion-carousel.
+What the plugin should do:
+Create a shortcode [hs_carousel] that can be placed on any WordPress page/post. Each instance can have its own colors, content, and styling configured via shortcode attributes and a custom Gutenberg/Classic block or just shortcode parameters.
+
+Plugin file structure to create:
+hs-accordion-carousel/
+├── hs-accordion-carousel.php   ← main plugin file
+├── assets/
+│   ├── hs-carousel.css         ← all styles extracted from the HTML
+│   └── hs-carousel.js          ← all JS logic extracted from the HTML
+└── README.md
+
+Shortcode usage example — this is how it will be used on any page:
+[hs_carousel
+  bg_color="#1DCBF1"
+  card_color="#1DCBF1"
+  closed_card_color="rgba(8,168,200,0.6)"
+  badge_color="#ffffff"
+  badge_text_color="#1DCBF1"
+  title_color="#09202e"
+  body_color="rgba(255,255,255,0.94)"
+  btn_bg="#ffffff"
+  btn_color="#1DCBF1"
+  arrow_color="#00E2A1"
+  card_height="524"
+  card_width="403"
+  btn_label="Descubra más"
+]
+  [hs_card title="Redes Sociales" link="#"]Gestionamos tus redes sociales con estrategia...[/hs_card]
+  [hs_card title="Reputación online" link="#"]Analizamos cuál es la situación actual...[/hs_card]
+  [hs_card title="Consultoría digital" link="#"]Analizamos la situación actual de la marca...[/hs_card]
+  [hs_card title="Campañas de publicidad" link="#"]Creamos una estrategia de publicidad...[/hs_card]
+  [hs_card title="SEO & Contenidos" link="#"]Optimizamos tu presencia en buscadores...[/hs_card]
+[/hs_carousel]
+
+How colors must work:
+All color values from shortcode attributes must be injected as inline CSS variables on the section wrapper element, like this:
+html<section class="hs-section" style="
+  --hs-bg: #1DCBF1;
+  --hs-card: #1DCBF1;
+  --hs-card-closed: rgba(8,168,200,0.6);
+  --hs-badge-bg: #fff;
+  --hs-badge-text: #1DCBF1;
+  --hs-title: #09202e;
+  --hs-body: rgba(255,255,255,0.94);
+  --hs-btn-bg: #fff;
+  --hs-btn-text: #1DCBF1;
+  --hs-arrow: #00E2A1;
+">
+Then in hs-carousel.css, replace every hardcoded color with the matching CSS variable, for example:
+css.hs-section        { background: var(--hs-bg); }
+.hs-item           { background: var(--hs-card); }
+.hs-item.hs-closed { background: var(--hs-card-closed) !important; }
+.hs-num-badge      { background: var(--hs-badge-bg); color: var(--hs-badge-text); }
+.hs-open-title     { color: var(--hs-title); }
+.hs-body           { color: var(--hs-body); }
+.hs-btn            { background: var(--hs-btn-bg); color: var(--hs-btn-text); }
+.hs-arrow          { background: var(--hs-arrow); }
+This means two carousels on the same page with different colors just work — each has its own CSS variables scoped to its own <section> element.
+
+JS behavior to preserve exactly (extract from the attached code):
+
+Desktop: horizontal accordion — cards collapse into 72px strips on the left, 2 open cards visible + 1 peeking on right
+Arrows navigate forward/backward (close/open cards one at a time)
+Clicking an open card collapses it; clicking a closed strip re-opens from that point
+Mobile (≤768px): vertical stacked accordion — tap to toggle open/closed independently, no arrows shown
+Each carousel instance on the page must have its own independent JS state (use unique IDs per instance, not global getElementById)
+
+
+PHP requirements:
+
+Register and enqueue hs-carousel.css and hs-carousel.js properly via wp_enqueue_scripts
+JS should be loaded in footer (true as last param)
+Each shortcode instance gets a unique ID like hs-carousel-1, hs-carousel-2 etc. using a static counter
+Cards are parsed from nested [hs_card] shortcodes — each card has title, link, and inner content as body text
+Auto-number the badge (1, 2, 3...) from card order — no need to pass number manually
+Google Fonts Poppins should be enqueued: https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700
+Plugin header comment must include: Plugin Name, Description, Version 1.0, Author
