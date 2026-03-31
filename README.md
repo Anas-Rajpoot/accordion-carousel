@@ -1,60 +1,81 @@
 # HS Accordion Carousel — WordPress Plugin v2.0
 
-  Responsive accordion carousel with desktop horizontal accordion and mobile vertical stacked behaviour.
-  Full **Elementor widget** with drag-and-drop settings panel.
+A responsive accordion carousel with **desktop horizontal accordion** and **mobile vertical stacked** behaviour.
+Fully integrated as an **Elementor widget** with a visual drag-and-drop settings panel.
 
-  ---
+---
 
-  ## ⬇️ Download & Install
+## Installation
 
-  ### Step 1 — Download the ZIP
-  👉 [**Download hs-accordion-carousel.zip**](https://github.com/Anas-Rajpoot/accordion-carousel/raw/main/hs-accordion-carousel.zip)
+1. Copy the `hs-accordion-carousel` folder to `/wp-content/plugins/`
+2. Activate via **WordPress Admin → Plugins → HS Accordion Carousel**
 
-  ### Step 2 — Upload to WordPress
-  1. Go to **WordPress Admin → Plugins → Add New → Upload Plugin**
-  2. Click **Choose File** and select `hs-accordion-carousel.zip`
-  3. Click **Install Now**
-  4. Click **Activate Plugin**
+---
 
-  ### Step 3 — Use in Elementor
-  1. Open any page in **Elementor**
-  2. Search **"Accordion Carousel"** in the widget panel
-  3. Drag it onto the page
-  4. Customise content and colours in the left panel
+## Using in Elementor (Recommended)
 
-  ---
+1. Open any page in **Elementor**
+2. Search for **"Accordion Carousel"** in the widget panel
+3. Drag it onto the page
+4. Use the left panel to configure content and styles
 
-  ## Requirements
+### Content Panel
+| Setting | Description |
+|---|---|
+| **Cards** | Repeater — add as many cards as needed. Each card has: Title, Body Text, Button Link |
+| **Button Label** | Text shown on all card buttons |
 
-  | | |
-  |---|---|
-  | WordPress | 5.5 or higher |
-  | Elementor | Free version is enough |
-  | PHP | 7.4 or higher |
+### Style Panel — Section Background
+| Setting | Description |
+|---|---|
+| Background Color | The outer section colour (default `#0098ED`) |
 
-  ---
+### Style Panel — Cards
+| Setting | Description |
+|---|---|
+| Card Background | Card colour (default `#1DCBF1`) |
+| Card Height | Desktop track height in px (default 400) |
+| Open Card Width | Width of each open card in px (default 403) |
 
-  ## Plugin Files
+### Style Panel — Badge (Number)
+| Setting | Description |
+|---|---|
+| Badge Background | Closed-card badge bg (default white) |
+| Badge Number Color | Closed-card badge number colour (default cyan) |
 
-  ```
-  hs-accordion-carousel/
-  ├── hs-accordion-carousel.php          ← Main plugin file
-  ├── includes/
-  │   └── class-hs-carousel-widget.php  ← Elementor widget
-  └── assets/
-      ├── hs-carousel.css
-      └── hs-carousel.js
-  ```
+> Open-card badge automatically uses the section background colour.
 
-  ---
+### Style Panel — Typography
+| Setting | Description |
+|---|---|
+| Title Color | Card title colour |
+| Title Font Size | Card title size in px |
+| Body Text Color | Body paragraph colour |
+| Body Font Size | Body paragraph size in px |
+| Closed Strip Title Color | Vertical title on closed desktop strips |
 
-  ## Shortcode Fallback (without Elementor)
+### Style Panel — Button
+| Setting | Description |
+|---|---|
+| Button Background | Button bg colour |
+| Button Text Color | Button text colour |
+| Button Font Size | Button label size in px |
 
-  ```
-  [hs_carousel bg_color="#0098ED" card_color="#1DCBF1" btn_label="Learn more"]
-    [hs_card title="Service One"   link="/service-1"]Body text.[/hs_card]
-    [hs_card title="Service Two"   link="/service-2"]Body text.[/hs_card]
-    [hs_card title="Service Three" link="/service-3"]Body text.[/hs_card]
-  [/hs_carousel]
-  ```
-  
+### Style Panel — Navigation Arrows
+| Setting | Description |
+|---|---|
+| Arrow Button Color | Background colour of the prev/next arrows |
+
+---
+
+## Shortcode Fallback (without Elementor)
+
+```
+[hs_carousel bg_color="#0098ED" card_color="#1DCBF1" btn_label="Learn more"]
+  [hs_card title="Service One"   link="/service-1"]Body text.[/hs_card]
+  [hs_card title="Service Two"   link="/service-2"]Body text.[/hs_card]
+  [hs_card title="Service Three" link="/service-3"]Body text.[/hs_card]
+[/hs_carousel]
+```
+
+Multiple independent instances on the same page are fully supported.
