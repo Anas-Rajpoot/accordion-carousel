@@ -205,6 +205,23 @@ class HS_Carousel_Widget extends \Elementor\Widget_Base {
             'selectors'  => [ '{{WRAPPER}} .hs-section' => '--hs-card-width: {{SIZE}}px;' ],
         ] );
 
+        /* ── Open Card Padding ── */
+        $this->add_control( 'open_card_padding_heading', [
+            'label'     => __( 'Open Card Inner Padding', 'hs-accordion-carousel' ),
+            'type'      => \Elementor\Controls_Manager::HEADING,
+            'separator' => 'before',
+        ] );
+
+        $this->add_control( 'open_card_padding', [
+            'label'      => __( 'Padding (T / R / B / L)', 'hs-accordion-carousel' ),
+            'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+            'size_units' => [ 'px' ],
+            'default'    => [ 'top' => '30', 'right' => '88', 'bottom' => '28', 'left' => '26', 'unit' => 'px', 'isLinked' => false ],
+            'selectors'  => [
+                '{{WRAPPER}} .hs-section' => '--hs-open-pad-top: {{TOP}}{{UNIT}}; --hs-open-pad-right: {{RIGHT}}{{UNIT}}; --hs-open-pad-bottom: {{BOTTOM}}{{UNIT}}; --hs-open-pad-left: {{LEFT}}{{UNIT}};',
+            ],
+        ] );
+
         $this->end_controls_section();
 
         /* ────────────────────────────────────────────────
@@ -455,6 +472,27 @@ class HS_Carousel_Widget extends \Elementor\Widget_Base {
             'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
         ] );
 
+        /* ── Strip Width ── */
+        $this->add_control( 'closed_strip_width', [
+            'label'      => __( 'Strip Width', 'hs-accordion-carousel' ),
+            'type'       => \Elementor\Controls_Manager::SLIDER,
+            'size_units' => [ 'px' ],
+            'range'      => [ 'px' => [ 'min' => 40, 'max' => 200, 'step' => 2 ] ],
+            'default'    => [ 'size' => 72, 'unit' => 'px' ],
+            'selectors'  => [ '{{WRAPPER}} .hs-section' => '--hs-closed-strip-w: {{SIZE}}px;' ],
+        ] );
+
+        /* ── Strip Padding ── */
+        $this->add_control( 'closed_strip_padding', [
+            'label'      => __( 'Strip Padding', 'hs-accordion-carousel' ),
+            'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+            'size_units' => [ 'px' ],
+            'default'    => [ 'top' => '16', 'right' => '0', 'bottom' => '28', 'left' => '0', 'unit' => 'px', 'isLinked' => false ],
+            'selectors'  => [
+                '{{WRAPPER}} .hs-section' => '--hs-closed-pad-top: {{TOP}}{{UNIT}}; --hs-closed-pad-right: {{RIGHT}}{{UNIT}}; --hs-closed-pad-bottom: {{BOTTOM}}{{UNIT}}; --hs-closed-pad-left: {{LEFT}}{{UNIT}};',
+            ],
+        ] );
+
         $this->add_control( 'closed_strip_type', [
             'label'   => __( 'Strip Content', 'hs-accordion-carousel' ),
             'type'    => \Elementor\Controls_Manager::SELECT,
@@ -562,30 +600,40 @@ class HS_Carousel_Widget extends \Elementor\Widget_Base {
             'selectors'  => [ '{{WRAPPER}} .hs-section' => '--hs-closed-img-ty: {{SIZE}}px;' ],
         ] );
 
-        /* ── Text controls ── */
+        /* ── Text controls (strip title — used in both Text mode and as fallback) ── */
         $this->add_control( 'closed_text_heading', [
-            'label'     => __( 'Text Settings', 'hs-accordion-carousel' ),
+            'label'     => __( 'Strip Text Settings', 'hs-accordion-carousel' ),
             'type'      => \Elementor\Controls_Manager::HEADING,
             'separator' => 'before',
-            'condition' => [ 'closed_strip_type' => 'text' ],
         ] );
 
         $this->add_control( 'closed_title_color', [
             'label'     => __( 'Strip Title Color', 'hs-accordion-carousel' ),
             'type'      => \Elementor\Controls_Manager::COLOR,
             'default'   => '#09202e',
-            'condition' => [ 'closed_strip_type' => 'text' ],
             'selectors' => [ '{{WRAPPER}} .hs-closed-title' => 'color: {{VALUE}};' ],
         ] );
 
         $this->add_control( 'closed_title_size', [
-            'label'      => __( 'Strip Title Size', 'hs-accordion-carousel' ),
+            'label'      => __( 'Strip Title Font Size', 'hs-accordion-carousel' ),
             'type'       => \Elementor\Controls_Manager::SLIDER,
             'size_units' => [ 'px' ],
-            'range'      => [ 'px' => [ 'min' => 9, 'max' => 22 ] ],
+            'range'      => [ 'px' => [ 'min' => 9, 'max' => 30 ] ],
             'default'    => [ 'size' => 13, 'unit' => 'px' ],
-            'condition'  => [ 'closed_strip_type' => 'text' ],
             'selectors'  => [ '{{WRAPPER}} .hs-closed-title' => 'font-size: {{SIZE}}px;' ],
+        ] );
+
+        $this->add_control( 'closed_title_weight', [
+            'label'   => __( 'Font Weight', 'hs-accordion-carousel' ),
+            'type'    => \Elementor\Controls_Manager::SELECT,
+            'default' => '700',
+            'options' => [
+                '400' => __( 'Normal (400)', 'hs-accordion-carousel' ),
+                '500' => __( 'Medium (500)',  'hs-accordion-carousel' ),
+                '600' => __( 'Semi Bold (600)', 'hs-accordion-carousel' ),
+                '700' => __( 'Bold (700)',    'hs-accordion-carousel' ),
+            ],
+            'selectors' => [ '{{WRAPPER}} .hs-closed-title' => 'font-weight: {{VALUE}};' ],
         ] );
 
         $this->add_control( 'closed_title_spacing', [
@@ -594,7 +642,6 @@ class HS_Carousel_Widget extends \Elementor\Widget_Base {
             'size_units' => [ 'px' ],
             'range'      => [ 'px' => [ 'min' => 0, 'max' => 5 ] ],
             'default'    => [ 'size' => 0.3, 'unit' => 'px' ],
-            'condition'  => [ 'closed_strip_type' => 'text' ],
             'selectors'  => [ '{{WRAPPER}} .hs-closed-title' => 'letter-spacing: {{SIZE}}px;' ],
         ] );
 
@@ -700,10 +747,48 @@ class HS_Carousel_Widget extends \Elementor\Widget_Base {
         ] );
 
         $this->add_control( 'arrow_color', [
-            'label'     => __( 'Arrow Button Color', 'hs-accordion-carousel' ),
+            'label'     => __( 'Button Background Color', 'hs-accordion-carousel' ),
             'type'      => \Elementor\Controls_Manager::COLOR,
             'default'   => '#00E2A1',
             'selectors' => [ '{{WRAPPER}} .hs-section' => '--hs-arrow: {{VALUE}};' ],
+        ] );
+
+        /* ── Button (circle) size ── */
+        $this->add_control( 'arrow_size', [
+            'label'      => __( 'Button Size (circle)', 'hs-accordion-carousel' ),
+            'type'       => \Elementor\Controls_Manager::SLIDER,
+            'size_units' => [ 'px' ],
+            'range'      => [ 'px' => [ 'min' => 24, 'max' => 100, 'step' => 2 ] ],
+            'default'    => [ 'size' => 42, 'unit' => 'px' ],
+            'selectors'  => [ '{{WRAPPER}} .hs-section' => '--hs-arrow-size: {{SIZE}}px;' ],
+        ] );
+
+        /* ── Icon (chevron) size ── */
+        $this->add_control( 'arrow_icon_size', [
+            'label'      => __( 'Icon Size ( ‹ › )', 'hs-accordion-carousel' ),
+            'type'       => \Elementor\Controls_Manager::SLIDER,
+            'size_units' => [ 'px' ],
+            'range'      => [ 'px' => [ 'min' => 12, 'max' => 80, 'step' => 2 ] ],
+            'default'    => [ 'size' => 36, 'unit' => 'px' ],
+            'selectors'  => [ '{{WRAPPER}} .hs-section' => '--hs-arrow-icon-size: {{SIZE}}px;' ],
+        ] );
+
+        /* ── Icon color ── */
+        $this->add_control( 'arrow_icon_color', [
+            'label'     => __( 'Icon Color', 'hs-accordion-carousel' ),
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'default'   => '#ffffff',
+            'selectors' => [ '{{WRAPPER}} .hs-section' => '--hs-arrow-icon-color: {{VALUE}};' ],
+        ] );
+
+        /* ── Stroke width ── */
+        $this->add_control( 'arrow_stroke', [
+            'label'      => __( 'Icon Stroke Width', 'hs-accordion-carousel' ),
+            'type'       => \Elementor\Controls_Manager::SLIDER,
+            'size_units' => [ 'px' ],
+            'range'      => [ 'px' => [ 'min' => 1, 'max' => 5, 'step' => 0.5 ] ],
+            'default'    => [ 'size' => 2.5, 'unit' => 'px' ],
+            'selectors'  => [ '{{WRAPPER}} .hs-section' => '--hs-arrow-stroke: {{SIZE}};' ],
         ] );
 
         $this->end_controls_section();
