@@ -2,14 +2,14 @@
 /**
  * Plugin Name: HS Accordion Carousel
  * Description: Responsive accordion carousel + Vertical Team Carousel Pro — Elementor widgets with full controls. Shortcode fallback: [hs_carousel].
- * Version: 2.3
+ * Version: 2.4
  * Author: HS Agency
  * Text Domain: hs-accordion-carousel
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'HS_CAROUSEL_VERSION', '2.3' );
+define( 'HS_CAROUSEL_VERSION', '2.4' );
 define( 'HS_CAROUSEL_URL',     plugin_dir_url( __FILE__ ) );
 define( 'HS_CAROUSEL_PATH',    plugin_dir_path( __FILE__ ) );
 
