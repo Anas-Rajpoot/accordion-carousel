@@ -1,5 +1,5 @@
 /* ============================================================
-   HS Vertical Team Carousel — Stylesheet  (v2.5)
+   HS Vertical Team Carousel — Stylesheet  (v2.6)
    All card styles scoped under .hs-team-section.
    Popup styles scoped under .hs-tc-overlay (appended to body).
    ============================================================ */
@@ -134,7 +134,31 @@
     pointer-events: all;
 }
 
-/* Modal box */
+/* Modal wrapper — carries the animation, allows close btn to overflow */
+.hs-tc-modal-wrap {
+    position: relative;
+    display: inline-flex;
+    max-width: 96vw;
+    max-height: 94vh;
+    /* zoom animation on the wrapper */
+    transform: scale(0.88) translateY(20px);
+    transition: transform 0.32s cubic-bezier(0.34,1.56,0.64,1), opacity 0.28s ease;
+    opacity: 0;
+}
+.hs-tc-overlay.hs-tc-open .hs-tc-modal-wrap {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+/* slide animation variant */
+.hs-tc-overlay[data-anim="slide"] .hs-tc-modal-wrap {
+    transform: translateY(40px);
+    transition: transform 0.32s cubic-bezier(0.4,0,0.2,1), opacity 0.28s ease;
+}
+.hs-tc-overlay[data-anim="slide"].hs-tc-open .hs-tc-modal-wrap {
+    transform: translateY(0);
+}
+
+/* Modal box — overflow:hidden preserved, no animation here */
 .hs-tc-modal {
     position: relative;
     display: flex;
@@ -150,22 +174,6 @@
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 32px 80px rgba(0,0,0,0.65);
-    /* zoom animation */
-    transform: scale(0.88) translateY(20px);
-    transition: transform 0.32s cubic-bezier(0.34,1.56,0.64,1), opacity 0.28s ease;
-    opacity: 0;
-}
-.hs-tc-overlay.hs-tc-open .hs-tc-modal {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-}
-/* slide animation variant */
-.hs-tc-overlay[data-anim="slide"] .hs-tc-modal {
-    transform: translateY(40px);
-    transition: transform 0.32s cubic-bezier(0.4,0,0.2,1), opacity 0.28s ease;
-}
-.hs-tc-overlay[data-anim="slide"].hs-tc-open .hs-tc-modal {
-    transform: translateY(0);
 }
 
 /* Text side */
@@ -216,26 +224,29 @@
     display: block;
 }
 
-/* Close button */
+/* Close button — top-right corner, half inside / half outside */
 .hs-tc-close {
     position: absolute;
-    top: 14px; right: 14px;
-    width: 34px; height: 34px;
+    top: -20px; right: -20px;
+    width: 40px; height: 40px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.18);
-    color: #fff;
+    background: #ffffff;
+    border: none;
+    color: #1a1a2e;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10;
-    transition: background 0.2s, transform 0.15s;
+    z-index: 20;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
     padding: 0;
+    flex-shrink: 0;
 }
 .hs-tc-close:hover {
-    background: rgba(255,255,255,0.2);
+    background: #f0f0f0;
     transform: scale(1.1);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
 }
 .hs-tc-close svg { pointer-events: none; }
 
