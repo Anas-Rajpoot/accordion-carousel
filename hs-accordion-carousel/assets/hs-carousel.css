@@ -58,7 +58,7 @@
 
 /* ── Closed card (narrow strip) ──────────────────────── */
 .hs-section .hs-item.hs-closed {
-    flex: 0 0 72px !important;
+    flex: 0 0 var(--hs-closed-strip-w, 72px) !important;
     background: var(--hs-card-closed, var(--hs-card, #1DCBF1)) !important;
     border-color: rgba(255,255,255,0.2) !important;
     cursor: pointer;
@@ -108,7 +108,7 @@
 .hs-section .hs-open-content {
     display: flex;
     flex-direction: column;
-    padding: 30px 88px 28px 26px;
+    padding: var(--hs-open-pad-top, 30px) var(--hs-open-pad-right, 88px) var(--hs-open-pad-bottom, 28px) var(--hs-open-pad-left, 26px);
     height: 100%;
     overflow: hidden;
 }
@@ -244,7 +244,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    padding: 16px 0 28px;
+    padding: var(--hs-closed-pad-top, 16px) var(--hs-closed-pad-right, 0px) var(--hs-closed-pad-bottom, 28px) var(--hs-closed-pad-left, 0px);
     height: 100%;
     overflow: hidden;
 }
@@ -267,8 +267,8 @@
     gap: 10px;
 }
 .hs-section .hs-arrow {
-    width: 42px;
-    height: 42px;
+    width: var(--hs-arrow-size, 42px);
+    height: var(--hs-arrow-size, 42px);
     border-radius: 50%;
     background: var(--hs-arrow, rgba(0,226,161,1));
     border: none;
@@ -281,11 +281,11 @@
 .hs-section .hs-arrow:hover  { transform: scale(1.08); }
 .hs-section .hs-arrow:active { transform: scale(0.94); }
 .hs-section .hs-arrow svg {
-    width: 36px;
-    height: 36px;
-    stroke: #fff;
+    width: var(--hs-arrow-icon-size, 36px);
+    height: var(--hs-arrow-icon-size, 36px);
+    stroke: var(--hs-arrow-icon-color, #fff);
     fill: none;
-    stroke-width: 2.5;
+    stroke-width: var(--hs-arrow-stroke, 2.5);
     stroke-linecap: round;
     stroke-linejoin: round;
 }
