@@ -445,11 +445,157 @@ class HS_Carousel_Widget extends \Elementor\Widget_Base {
             'selectors'  => [ '{{WRAPPER}} .hs-divider' => 'height: {{SIZE}}{{UNIT}};' ],
         ] );
 
+        $this->end_controls_section();
+
+        /* ────────────────────────────────────────────────
+           STYLE TAB — Closed Strip
+        ──────────────────────────────────────────────── */
+        $this->start_controls_section( 'style_closed_strip', [
+            'label' => __( '📌 Closed Strip', 'hs-accordion-carousel' ),
+            'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+        ] );
+
+        $this->add_control( 'closed_strip_type', [
+            'label'   => __( 'Strip Content', 'hs-accordion-carousel' ),
+            'type'    => \Elementor\Controls_Manager::SELECT,
+            'options' => [
+                'image' => __( 'Image  (image-type cards)', 'hs-accordion-carousel' ),
+                'text'  => __( 'Text   (strip title)', 'hs-accordion-carousel' ),
+            ],
+            'default' => 'image',
+            'description' => __( 'Choose what shows on the narrow closed strip for image-type cards.', 'hs-accordion-carousel' ),
+        ] );
+
+        /* ── Image controls ── */
+        $this->add_control( 'closed_img_heading', [
+            'label'     => __( 'Image Settings', 'hs-accordion-carousel' ),
+            'type'      => \Elementor\Controls_Manager::HEADING,
+            'separator' => 'before',
+            'condition' => [ 'closed_strip_type' => 'image' ],
+        ] );
+
+        $this->add_control( 'closed_img_w', [
+            'label'      => __( 'Image Width (pre-rotation)', 'hs-accordion-carousel' ),
+            'type'       => \Elementor\Controls_Manager::SLIDER,
+            'size_units' => [ 'px' ],
+            'range'      => [ 'px' => [ 'min' => 40, 'max' => 300 ] ],
+            'default'    => [ 'size' => 120, 'unit' => 'px' ],
+            'condition'  => [ 'closed_strip_type' => 'image' ],
+            'selectors'  => [ '{{WRAPPER}} .hs-section' => '--hs-closed-img-w: {{SIZE}}px;' ],
+        ] );
+
+        $this->add_control( 'closed_img_h', [
+            'label'      => __( 'Image Height (pre-rotation)', 'hs-accordion-carousel' ),
+            'type'       => \Elementor\Controls_Manager::SLIDER,
+            'size_units' => [ 'px' ],
+            'range'      => [ 'px' => [ 'min' => 10, 'max' => 100 ] ],
+            'default'    => [ 'size' => 44, 'unit' => 'px' ],
+            'condition'  => [ 'closed_strip_type' => 'image' ],
+            'selectors'  => [ '{{WRAPPER}} .hs-section' => '--hs-closed-img-h: {{SIZE}}px;' ],
+        ] );
+
+        $this->add_control( 'closed_img_fit', [
+            'label'     => __( 'Object Fit', 'hs-accordion-carousel' ),
+            'type'      => \Elementor\Controls_Manager::SELECT,
+            'options'   => [
+                'contain' => __( 'Contain', 'hs-accordion-carousel' ),
+                'cover'   => __( 'Cover',   'hs-accordion-carousel' ),
+                'fill'    => __( 'Fill',    'hs-accordion-carousel' ),
+            ],
+            'default'   => 'contain',
+            'condition' => [ 'closed_strip_type' => 'image' ],
+            'selectors' => [ '{{WRAPPER}} .hs-section' => '--hs-closed-img-fit: {{VALUE}};' ],
+        ] );
+
+        $this->add_control( 'closed_img_radius', [
+            'label'      => __( 'Border Radius', 'hs-accordion-carousel' ),
+            'type'       => \Elementor\Controls_Manager::SLIDER,
+            'size_units' => [ 'px', '%' ],
+            'range'      => [ 'px' => [ 'min' => 0, 'max' => 50 ] ],
+            'default'    => [ 'size' => 8, 'unit' => 'px' ],
+            'condition'  => [ 'closed_strip_type' => 'image' ],
+            'selectors'  => [ '{{WRAPPER}} .hs-section' => '--hs-closed-img-radius: {{SIZE}}{{UNIT}};' ],
+        ] );
+
+        $this->add_control( 'closed_img_bg', [
+            'label'     => __( 'Image Background', 'hs-accordion-carousel' ),
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'default'   => 'rgba(255,255,255,0.12)',
+            'condition' => [ 'closed_strip_type' => 'image' ],
+            'selectors' => [ '{{WRAPPER}} .hs-section' => '--hs-closed-img-bg: {{VALUE}};' ],
+        ] );
+
+        $this->add_control( 'closed_img_transform_heading', [
+            'label'     => __( 'Image Transform', 'hs-accordion-carousel' ),
+            'type'      => \Elementor\Controls_Manager::HEADING,
+            'separator' => 'before',
+            'condition' => [ 'closed_strip_type' => 'image' ],
+        ] );
+
+        $this->add_control( 'closed_img_rotate', [
+            'label'      => __( 'Rotation (deg)', 'hs-accordion-carousel' ),
+            'type'       => \Elementor\Controls_Manager::SLIDER,
+            'size_units' => [ 'deg' ],
+            'range'      => [ 'deg' => [ 'min' => -180, 'max' => 180 ] ],
+            'default'    => [ 'size' => -90, 'unit' => 'deg' ],
+            'condition'  => [ 'closed_strip_type' => 'image' ],
+            'selectors'  => [ '{{WRAPPER}} .hs-section' => '--hs-closed-img-rotate: {{SIZE}}deg;' ],
+        ] );
+
+        $this->add_control( 'closed_img_tx', [
+            'label'      => __( 'Translate X (px)', 'hs-accordion-carousel' ),
+            'type'       => \Elementor\Controls_Manager::SLIDER,
+            'size_units' => [ 'px' ],
+            'range'      => [ 'px' => [ 'min' => -100, 'max' => 100 ] ],
+            'default'    => [ 'size' => 0, 'unit' => 'px' ],
+            'condition'  => [ 'closed_strip_type' => 'image' ],
+            'selectors'  => [ '{{WRAPPER}} .hs-section' => '--hs-closed-img-tx: {{SIZE}}px;' ],
+        ] );
+
+        $this->add_control( 'closed_img_ty', [
+            'label'      => __( 'Translate Y (px)', 'hs-accordion-carousel' ),
+            'type'       => \Elementor\Controls_Manager::SLIDER,
+            'size_units' => [ 'px' ],
+            'range'      => [ 'px' => [ 'min' => -100, 'max' => 100 ] ],
+            'default'    => [ 'size' => 0, 'unit' => 'px' ],
+            'condition'  => [ 'closed_strip_type' => 'image' ],
+            'selectors'  => [ '{{WRAPPER}} .hs-section' => '--hs-closed-img-ty: {{SIZE}}px;' ],
+        ] );
+
+        /* ── Text controls ── */
+        $this->add_control( 'closed_text_heading', [
+            'label'     => __( 'Text Settings', 'hs-accordion-carousel' ),
+            'type'      => \Elementor\Controls_Manager::HEADING,
+            'separator' => 'before',
+            'condition' => [ 'closed_strip_type' => 'text' ],
+        ] );
+
         $this->add_control( 'closed_title_color', [
-            'label'     => __( 'Closed Strip Title Color', 'hs-accordion-carousel' ),
+            'label'     => __( 'Strip Title Color', 'hs-accordion-carousel' ),
             'type'      => \Elementor\Controls_Manager::COLOR,
             'default'   => '#09202e',
+            'condition' => [ 'closed_strip_type' => 'text' ],
             'selectors' => [ '{{WRAPPER}} .hs-closed-title' => 'color: {{VALUE}};' ],
+        ] );
+
+        $this->add_control( 'closed_title_size', [
+            'label'      => __( 'Strip Title Size', 'hs-accordion-carousel' ),
+            'type'       => \Elementor\Controls_Manager::SLIDER,
+            'size_units' => [ 'px' ],
+            'range'      => [ 'px' => [ 'min' => 9, 'max' => 22 ] ],
+            'default'    => [ 'size' => 13, 'unit' => 'px' ],
+            'condition'  => [ 'closed_strip_type' => 'text' ],
+            'selectors'  => [ '{{WRAPPER}} .hs-closed-title' => 'font-size: {{SIZE}}px;' ],
+        ] );
+
+        $this->add_control( 'closed_title_spacing', [
+            'label'      => __( 'Letter Spacing', 'hs-accordion-carousel' ),
+            'type'       => \Elementor\Controls_Manager::SLIDER,
+            'size_units' => [ 'px' ],
+            'range'      => [ 'px' => [ 'min' => 0, 'max' => 5 ] ],
+            'default'    => [ 'size' => 0.3, 'unit' => 'px' ],
+            'condition'  => [ 'closed_strip_type' => 'text' ],
+            'selectors'  => [ '{{WRAPPER}} .hs-closed-title' => 'letter-spacing: {{SIZE}}px;' ],
         ] );
 
         $this->end_controls_section();
@@ -576,6 +722,8 @@ class HS_Carousel_Widget extends \Elementor\Widget_Base {
 
         $cards        = ! empty( $s['cards'] )     ? $s['cards']     : [];
         $global_label = ! empty( $s['btn_label'] ) ? $s['btn_label'] : 'Discover more';
+        $strip_type   = ! empty( $s['closed_strip_type'] ) ? $s['closed_strip_type'] : 'image';
+        $strip_class  = $strip_type === 'text' ? ' hs-strip-text' : '';
 
         /* Enqueue selected font from Google Fonts (only when not Poppins — Poppins is already loaded) */
         $font = ! empty( $s['font_family'] ) ? $s['font_family'] : 'Poppins';
@@ -584,7 +732,7 @@ class HS_Carousel_Widget extends \Elementor\Widget_Base {
             wp_enqueue_style( 'hs-carousel-font-' . sanitize_title( $font ), $font_url, [], null );
         }
         ?>
-        <section class="hs-section">
+        <section class="hs-section<?php echo esc_attr( $strip_class ); ?>">
             <div class="hs-inner">
                 <div class="hs-track-wrap" id="<?php echo esc_attr( $wrap_id ); ?>">
                     <div class="hs-track" id="<?php echo esc_attr( $track_id ); ?>">
@@ -701,8 +849,9 @@ class HS_Carousel_Widget extends \Elementor\Widget_Base {
         <#
         var cards       = settings.cards || [];
         var globalLabel = settings.btn_label || 'Discover more';
+        var stripClass  = settings.closed_strip_type === 'text' ? ' hs-strip-text' : '';
         #>
-        <section class="hs-section">
+        <section class="hs-section{{ stripClass }}">
             <div class="hs-inner">
                 <div class="hs-track-wrap">
                     <div class="hs-track">
