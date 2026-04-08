@@ -137,12 +137,21 @@ class HS_Team_Carousel_Widget extends Widget_Base {
             'tab'   => Controls_Manager::TAB_CONTENT,
         ] );
 
+        $this->add_control( 'card_width', [
+            'label'      => esc_html__( 'Column Width (desktop)', 'hs-carousel' ),
+            'type'       => Controls_Manager::SLIDER,
+            'size_units' => [ 'px', '%' ],
+            'range'      => [ 'px' => [ 'min' => 160, 'max' => 600, 'step' => 4 ] ],
+            'default'    => [ 'unit' => 'px', 'size' => 340 ],
+            'selectors'  => [ '{{WRAPPER}} .hs-team-section' => '--hst-col-w: {{SIZE}}{{UNIT}};' ],
+        ] );
+
         $this->add_control( 'card_height', [
             'label'      => esc_html__( 'Card Height', 'hs-carousel' ),
             'type'       => Controls_Manager::SLIDER,
             'size_units' => [ 'px' ],
-            'range'      => [ 'px' => [ 'min' => 80, 'max' => 500, 'step' => 4 ] ],
-            'default'    => [ 'unit' => 'px', 'size' => 220 ],
+            'range'      => [ 'px' => [ 'min' => 80, 'max' => 600, 'step' => 4 ] ],
+            'default'    => [ 'unit' => 'px', 'size' => 340 ],
             'selectors'  => [ '{{WRAPPER}} .hs-team-card' => 'height: {{SIZE}}{{UNIT}};' ],
         ] );
 
@@ -264,19 +273,37 @@ class HS_Team_Carousel_Widget extends Widget_Base {
             'condition' => [ 'enable_popup' => 'yes' ],
         ] );
 
+        /* ── Desktop Popup Size ── */
+        $this->add_control( 'popup_size_heading', [
+            'label'     => esc_html__( 'Desktop Size', 'hs-carousel' ),
+            'type'      => Controls_Manager::HEADING,
+            'separator' => 'before',
+            'condition' => [ 'enable_popup' => 'yes' ],
+        ] );
+
         $this->add_control( 'popup_width', [
             'label'      => esc_html__( 'Popup Width', 'hs-carousel' ),
             'type'       => Controls_Manager::SLIDER,
             'size_units' => [ 'px', 'vw' ],
-            'range'      => [ 'px' => [ 'min' => 360, 'max' => 1000, 'step' => 10 ] ],
-            'default'    => [ 'unit' => 'px', 'size' => 680 ],
+            'range'      => [ 'px' => [ 'min' => 360, 'max' => 1400, 'step' => 10 ] ],
+            'default'    => [ 'unit' => 'px', 'size' => 1025 ],
             'condition'  => [ 'enable_popup' => 'yes' ],
             'selectors'  => [ '.hs-tc-overlay[data-widget="{{ID}}"] .hs-tc-modal' => 'width: {{SIZE}}{{UNIT}};' ],
         ] );
 
+        $this->add_control( 'popup_height', [
+            'label'      => esc_html__( 'Popup Height', 'hs-carousel' ),
+            'type'       => Controls_Manager::SLIDER,
+            'size_units' => [ 'px', 'vh' ],
+            'range'      => [ 'px' => [ 'min' => 200, 'max' => 900, 'step' => 4 ] ],
+            'default'    => [ 'unit' => 'px', 'size' => 524 ],
+            'condition'  => [ 'enable_popup' => 'yes' ],
+            'selectors'  => [ '.hs-tc-overlay[data-widget="{{ID}}"] .hs-tc-modal' => 'height: {{SIZE}}{{UNIT}};' ],
+        ] );
+
         /* Popup image controls */
         $this->add_control( 'popup_img_heading', [
-            'label'     => esc_html__( 'Image Side', 'hs-carousel' ),
+            'label'     => esc_html__( 'Image Side (Desktop)', 'hs-carousel' ),
             'type'      => Controls_Manager::HEADING,
             'separator' => 'before',
             'condition' => [ 'enable_popup' => 'yes' ],
@@ -286,8 +313,8 @@ class HS_Team_Carousel_Widget extends Widget_Base {
             'label'      => esc_html__( 'Image Panel Width', 'hs-carousel' ),
             'type'       => Controls_Manager::SLIDER,
             'size_units' => [ 'px', '%' ],
-            'range'      => [ 'px' => [ 'min' => 100, 'max' => 500, 'step' => 4 ] ],
-            'default'    => [ 'unit' => 'px', 'size' => 260 ],
+            'range'      => [ 'px' => [ 'min' => 100, 'max' => 600, 'step' => 4 ] ],
+            'default'    => [ 'unit' => 'px', 'size' => 340 ],
             'condition'  => [ 'enable_popup' => 'yes' ],
             'selectors'  => [ '.hs-tc-overlay[data-widget="{{ID}}"] .hs-tc-modal-img' => 'flex: 0 0 {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}};' ],
         ] );
@@ -388,6 +415,16 @@ class HS_Team_Carousel_Widget extends Widget_Base {
             'range'      => [ 'px' => [ 'min' => 240, 'max' => 600, 'step' => 4 ], 'vw' => [ 'min' => 60, 'max' => 100 ] ],
             'default'    => [ 'unit' => 'vw', 'size' => 92 ],
             'selectors'  => [ '.hs-tc-overlay[data-widget="{{ID}}"] .hs-tc-modal' => '--hst-mobile-popup-width: {{SIZE}}{{UNIT}};' ],
+        ] );
+
+        $this->add_control( 'mobile_popup_height', [
+            'label'       => esc_html__( 'Popup Height (mobile)', 'hs-carousel' ),
+            'type'        => Controls_Manager::SLIDER,
+            'size_units'  => [ 'px', 'vh' ],
+            'range'       => [ 'px' => [ 'min' => 200, 'max' => 900, 'step' => 4 ] ],
+            'default'     => [ 'unit' => 'px', 'size' => 480 ],
+            'description' => esc_html__( 'Set to auto or leave at 0 for auto height on mobile.', 'hs-carousel' ),
+            'selectors'   => [ '.hs-tc-overlay[data-widget="{{ID}}"] .hs-tc-modal' => '--hst-mobile-popup-h: {{SIZE}}{{UNIT}};' ],
         ] );
 
         $this->add_control( 'mobile_popup_img_height', [
