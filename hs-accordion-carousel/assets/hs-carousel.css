@@ -154,19 +154,36 @@
 /* ── Closed strip: image thumbnail (when header_type = image) ── */
 .hs-section .hs-closed-img {
     display: none;
-    width: 44px;
-    height: 44px;
-    border-radius: 8px;
-    object-fit: contain;
+    width: var(--hs-closed-img-w, 120px);
+    height: var(--hs-closed-img-h, 44px);
+    object-fit: var(--hs-closed-img-fit, contain);
     object-position: center;
-    background: rgba(255,255,255,0.12);
-    padding: 3px;
+    background: var(--hs-closed-img-bg, transparent);
+    border-radius: var(--hs-closed-img-radius, 0px);
+    padding: 0;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    transform:
+        rotate(var(--hs-closed-img-rotate, -90deg))
+        translateX(var(--hs-closed-img-tx, 0px))
+        translateY(var(--hs-closed-img-ty, 0px));
+    transform-origin: center;
 }
-.hs-section .hs-item--image-header.hs-closed .hs-closed-title {
+
+/* Default (strip = image): show image, hide strip title */
+.hs-section:not(.hs-strip-text) .hs-item--image-header.hs-closed .hs-closed-title {
     display: none;
 }
-.hs-section .hs-item--image-header.hs-closed .hs-closed-img {
+.hs-section:not(.hs-strip-text) .hs-item--image-header.hs-closed .hs-closed-img {
     display: block;
+}
+
+/* Strip type = text: show title, hide image */
+.hs-section.hs-strip-text .hs-item--image-header.hs-closed .hs-closed-img {
+    display: none !important;
+}
+.hs-section.hs-strip-text .hs-item--image-header.hs-closed .hs-closed-title {
+    display: block !important;
 }
 
 /* ── Body text ── */
@@ -187,6 +204,9 @@
     flex-shrink: 0;
     display: flex;
     justify-content: var(--hs-btn-align, flex-start);
+    /* Break out of the card body's 88px right padding so right-align lands near the card edge */
+    margin-right: -62px;
+    padding-right: 26px;
 }
 
 /* ── Button ── */
@@ -216,10 +236,6 @@
     stroke-linecap: round;
     stroke-linejoin: round;
     flex-shrink: 0;
-}
-.hs-section .hs-item:not(.hs-closed):hover .hs-btn {
-    background: var(--hs-card, #1DCBF1);
-    color: #fff;
 }
 
 /* ── Closed strip: vertical rotated title ────────────── */
@@ -383,6 +399,8 @@
     /* Mobile button: full width, always centred */
     .hs-section .hs-btn-wrap {
         padding-top: 18px;
+        padding-right: 0;
+        margin-right: 0;
         width: 100%;
         justify-content: center !important;
     }
