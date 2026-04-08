@@ -187,6 +187,36 @@ class HS_Carousel_Widget extends \Elementor\Widget_Base {
             'selectors'   => [ '{{WRAPPER}} .hs-section' => '--hs-card-closed: {{VALUE}};' ],
         ] );
 
+        /* ── Card Border ── */
+        $this->add_control( 'card_border_heading', [
+            'label'     => __( 'Card Border', 'hs-accordion-carousel' ),
+            'type'      => \Elementor\Controls_Manager::HEADING,
+            'separator' => 'before',
+        ] );
+
+        $this->add_control( 'card_border_width', [
+            'label'      => __( 'Border Width', 'hs-accordion-carousel' ),
+            'type'       => \Elementor\Controls_Manager::SLIDER,
+            'size_units' => [ 'px' ],
+            'range'      => [ 'px' => [ 'min' => 0, 'max' => 8, 'step' => 1 ] ],
+            'default'    => [ 'size' => 0, 'unit' => 'px' ],
+            'selectors'  => [ '{{WRAPPER}} .hs-section' => '--hs-card-border-w: {{SIZE}}px;' ],
+        ] );
+
+        $this->add_control( 'card_border_color', [
+            'label'     => __( 'Border Color', 'hs-accordion-carousel' ),
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'default'   => 'rgba(255,255,255,0.4)',
+            'selectors' => [ '{{WRAPPER}} .hs-section' => '--hs-card-border-color: {{VALUE}};' ],
+        ] );
+
+        $this->add_control( 'card_border_hover_color', [
+            'label'     => __( 'Border Color (hover)', 'hs-accordion-carousel' ),
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'default'   => 'rgba(255,255,255,0.75)',
+            'selectors' => [ '{{WRAPPER}} .hs-section' => '--hs-card-border-hover: {{VALUE}};' ],
+        ] );
+
         $this->add_control( 'card_height', [
             'label'      => __( 'Card Height (px)', 'hs-accordion-carousel' ),
             'type'       => \Elementor\Controls_Manager::SLIDER,
@@ -734,6 +764,16 @@ class HS_Carousel_Widget extends \Elementor\Widget_Base {
             'range'      => [ 'px' => [ 'min' => 10, 'max' => 22 ] ],
             'default'    => [ 'size' => 14, 'unit' => 'px' ],
             'selectors'  => [ '{{WRAPPER}} .hs-btn' => 'font-size: {{SIZE}}px;' ],
+        ] );
+
+        $this->add_control( 'btn_padding', [
+            'label'      => __( 'Button Padding (T / R / B / L)', 'hs-accordion-carousel' ),
+            'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+            'size_units' => [ 'px' ],
+            'default'    => [ 'top' => '11', 'right' => '26', 'bottom' => '11', 'left' => '26', 'unit' => 'px', 'isLinked' => false ],
+            'selectors'  => [
+                '{{WRAPPER}} .hs-section' => '--hs-btn-pad-top: {{TOP}}{{UNIT}}; --hs-btn-pad-right: {{RIGHT}}{{UNIT}}; --hs-btn-pad-bottom: {{BOTTOM}}{{UNIT}}; --hs-btn-pad-left: {{LEFT}}{{UNIT}};',
+            ],
         ] );
 
         $this->end_controls_section();
