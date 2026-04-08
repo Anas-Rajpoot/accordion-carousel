@@ -43,7 +43,9 @@
 .hs-section .hs-item {
     flex: 0 0 var(--hs-card-width, 403px);
     background: var(--hs-card, #1DCBF1);
-    border: 2px solid rgba(255,255,255,0.4);
+    border-width: var(--hs-card-border-w, 0px);
+    border-style: solid;
+    border-color: var(--hs-card-border-color, rgba(255,255,255,0.4));
     border-radius: 20px;
     overflow: hidden;
     display: flex;
@@ -53,7 +55,7 @@
     transition: flex-basis 0.5s cubic-bezier(0.4,0,0.2,1), border-color 0.25s;
 }
 .hs-section .hs-item:not(.hs-closed):hover {
-    border-color: rgba(255,255,255,0.75);
+    border-color: var(--hs-card-border-hover, rgba(255,255,255,0.75));
 }
 
 /* ── Closed card (narrow strip) ──────────────────────── */
@@ -214,7 +216,7 @@
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    padding: 11px 26px;
+    padding: var(--hs-btn-pad-top, 11px) var(--hs-btn-pad-right, 26px) var(--hs-btn-pad-bottom, 11px) var(--hs-btn-pad-left, 26px);
     background: var(--hs-btn-bg, #fff);
     border: none;
     border-radius: 999px;
