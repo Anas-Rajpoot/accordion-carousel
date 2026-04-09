@@ -1,5 +1,5 @@
 /* ============================================================
-   HS Vertical Team Carousel — Stylesheet  (v2.6)
+   HS Vertical Team Carousel — Stylesheet  (v2.7)
    All card styles scoped under .hs-team-section.
    Popup styles scoped under .hs-tc-overlay (appended to body).
    ============================================================ */
@@ -260,15 +260,16 @@
     /* Stack rows on top of each other instead of side by side */
     .hs-team-columns {
         flex-direction: column;
-        height: var(--hst-mobile-height, 360px);
+        /* auto-size to 2× card height + gap — no more separate height control needed */
+        height: calc(var(--hst-mobile-card-h, 235px) * 2 + var(--hst-mobile-col-gap, 10px));
         gap: var(--hst-mobile-col-gap, 10px);
         overflow: hidden;
         padding: 0;
     }
 
-    /* Each row is a horizontal scroll band */
+    /* Each row: exact height = card height */
     .hs-team-col {
-        flex: 1;
+        flex: 0 0 var(--hst-mobile-card-h, 235px);
         overflow: hidden;
         position: relative;
     }
@@ -276,15 +277,15 @@
     /* Track lays cards out in a horizontal line */
     .hs-team-track {
         flex-direction: row;
-        height: 100%;
+        height: var(--hst-mobile-card-h, 235px);
         width: max-content;
         gap: var(--hst-mobile-card-gap, 10px);
     }
 
-    /* Cards: fixed width, fill row height */
+    /* Cards: explicit width AND height from variables */
     .hs-team-card {
-        width: var(--hst-mobile-card-w, 160px) !important;
-        height: 100% !important;
+        width: var(--hst-mobile-card-w, 235px) !important;
+        height: var(--hst-mobile-card-h, 235px) !important;
         scroll-snap-align: start;
     }
 
