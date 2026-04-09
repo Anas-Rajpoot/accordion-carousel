@@ -181,6 +181,7 @@
         document.body.appendChild(overlay);
 
         var modal    = overlay.querySelector('.hs-tc-modal');
+        var wrap     = overlay.querySelector('.hs-tc-modal-wrap');
         var closeBtn = overlay.querySelector('.hs-tc-close');
         var nameEl   = overlay.querySelector('.hs-tc-modal-name');
         var posEl    = overlay.querySelector('.hs-tc-modal-position');
@@ -227,21 +228,40 @@
         }
 
         closeBtn.addEventListener('click', closePopup);
-        overlay.addEventListener('click', function (e) { if (!modal.contains(e.target)) closePopup(); });
+        /* Use wrap so clicking the close btn (outside modal) doesn't double-fire */
+        overlay.addEventListener('click', function (e) { if (!wrap.contains(e.target)) closePopup(); });
 
-        function attachCardListeners(track) {
-            track.querySelectorAll('.hs-team-card:not([aria-hidden])').forEach(function (card) {
-                card.addEventListener('click', function () { openPopup(card); });
-                card.addEventListener('keydown', function (e) {
-                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPopup(card); }
-                });
-                card.setAttribute('tabindex', '0');
+        /* ── Event delegation on each COLUMN container ──
+           Works on both original cards AND clones, regardless of scroll position.
+           The key insight: col2 starts at -half2 so CLONES are often visible first;
+           per-card listeners on originals silently fail on clones. ── */
+        function attachClickDelegation(colEl) {
+            /* Keyboard accessibility: mark all cards (originals + clones) */
+            colEl.querySelectorAll('.hs-team-card').forEach(function (card) {
+                card.setAttribute('tabindex', card.getAttribute('aria-hidden') ? '-1' : '0');
                 card.setAttribute('role', 'button');
+            });
+
+            /* Single delegated click on the column wrapper */
+            colEl.addEventListener('click', function (e) {
+                var card = e.target.closest ? e.target.closest('.hs-team-card') : null;
+                if (!card) return;
+                /* Read data from the clicked card directly — cloneNode(true) copies all data-* attrs */
+                openPopup(card);
+            });
+
+            /* Keyboard: keydown on column, target must be a card */
+            colEl.addEventListener('keydown', function (e) {
+                if (e.key !== 'Enter' && e.key !== ' ') return;
+                var card = e.target.closest ? e.target.closest('.hs-team-card') : null;
+                if (!card) return;
+                e.preventDefault();
+                openPopup(card);
             });
         }
 
-        attachCardListeners(track1);
-        if (track2) attachCardListeners(track2);
+        attachClickDelegation(col1El);
+        if (col2El) attachClickDelegation(col2El);
     }
 
     global.hsInitTeamCarousel = hsInitTeamCarousel;
