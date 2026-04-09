@@ -358,12 +358,13 @@ class HS_Team_Carousel_Widget extends Widget_Base {
         ] );
 
         $this->add_control( 'mobile_section_height', [
-            'label'      => esc_html__( 'Row Height (mobile)', 'hs-carousel' ),
-            'type'       => Controls_Manager::SLIDER,
-            'size_units' => [ 'px' ],
-            'range'      => [ 'px' => [ 'min' => 100, 'max' => 600, 'step' => 4 ] ],
-            'default'    => [ 'unit' => 'px', 'size' => 260 ],
-            'selectors'  => [ '{{WRAPPER}} .hs-team-section' => '--hst-mobile-height: {{SIZE}}{{UNIT}};' ],
+            'label'       => esc_html__( 'Section Total Height (mobile)', 'hs-carousel' ),
+            'type'        => Controls_Manager::SLIDER,
+            'size_units'  => [ 'px' ],
+            'range'       => [ 'px' => [ 'min' => 100, 'max' => 800, 'step' => 4 ] ],
+            'default'     => [ 'unit' => 'px', 'size' => 480 ],
+            'description' => esc_html__( 'Legacy override — card height below auto-sizes the section.', 'hs-carousel' ),
+            'selectors'   => [ '{{WRAPPER}} .hs-team-section' => '--hst-mobile-height: {{SIZE}}{{UNIT}};' ],
         ] );
 
         $this->add_control( 'mobile_col_gap', [
@@ -380,7 +381,7 @@ class HS_Team_Carousel_Widget extends Widget_Base {
             'type'       => Controls_Manager::SLIDER,
             'size_units' => [ 'px' ],
             'range'      => [ 'px' => [ 'min' => 80, 'max' => 400, 'step' => 4 ] ],
-            'default'    => [ 'unit' => 'px', 'size' => 160 ],
+            'default'    => [ 'unit' => 'px', 'size' => 235 ],
             'selectors'  => [ '{{WRAPPER}} .hs-team-section' => '--hst-mobile-card-w: {{SIZE}}{{UNIT}};' ],
         ] );
 
@@ -389,8 +390,9 @@ class HS_Team_Carousel_Widget extends Widget_Base {
             'type'       => Controls_Manager::SLIDER,
             'size_units' => [ 'px' ],
             'range'      => [ 'px' => [ 'min' => 80, 'max' => 500, 'step' => 4 ] ],
-            'default'    => [ 'unit' => 'px', 'size' => 240 ],
-            'selectors'  => [ '{{WRAPPER}} .hs-team-section' => '--hst-mobile-card-h: {{SIZE}}{{UNIT}};' ],
+            'default'    => [ 'unit' => 'px', 'size' => 235 ],
+            'description' => esc_html__( 'Also auto-sizes each row and the section height.', 'hs-carousel' ),
+            'selectors'   => [ '{{WRAPPER}} .hs-team-section' => '--hst-mobile-card-h: {{SIZE}}{{UNIT}};' ],
         ] );
 
         $this->add_control( 'mobile_card_gap', [
